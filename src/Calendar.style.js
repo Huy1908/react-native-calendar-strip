@@ -24,7 +24,8 @@ export default StyleSheet.create({
   calendarHeader: {
     textAlign: "center",
     fontWeight: "bold",
-    alignSelf: "center"
+    alignSelf: "flex-end",
+    paddingRight: 10,
   },
   iconContainer: {
     justifyContent: "center",

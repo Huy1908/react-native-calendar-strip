@@ -24,7 +24,6 @@ class CalendarStrip extends Component {
     innerStyle: PropTypes.any,
     calendarColor: PropTypes.string,
 
-    numDaysInWeek: PropTypes.number,
     scrollable: PropTypes.bool,
     startingDate: PropTypes.any,
     selectedDate: PropTypes.any,
@@ -88,7 +87,6 @@ class CalendarStrip extends Component {
   };
 
   static defaultProps = {
-    numDaysInWeek: 7,
     useIsoWeekday: true,
     showMonth: true,
     showDate: true,
@@ -112,6 +110,7 @@ class CalendarStrip extends Component {
 
   constructor(props) {
     super(props);
+    this.numDaysInWeek = 7;
     this.numDaysScroll = 366; // prefer even number divisible by 3
 
     if (props.locale) {
@@ -331,7 +330,6 @@ class CalendarStrip extends Component {
 
   onLayoutDebounce = layout => {
     const {
-      numDaysInWeek,
       responsiveSizingOffset,
       maxDayComponentSize,
       minDayComponentSize,
@@ -340,10 +338,11 @@ class CalendarStrip extends Component {
       scrollable,
     } = this.props;
     let csWidth = PixelRatio.roundToNearestPixel(layout.width);
-    let dayComponentWidth = csWidth / numDaysInWeek + responsiveSizingOffset;
+    let numElements = this.numDaysInWeek;
+    let dayComponentWidth = csWidth / numElements + responsiveSizingOffset;
     dayComponentWidth = Math.min(dayComponentWidth, maxDayComponentSize);
     dayComponentWidth = Math.max(dayComponentWidth, minDayComponentSize);
-    let numVisibleDays = numDaysInWeek;
+    let numVisibleDays = this.numDaysInWeek;
     let marginHorizontal;
     if (scrollable) {
       numVisibleDays = Math.floor(csWidth / dayComponentWidth);
@@ -416,7 +415,6 @@ class CalendarStrip extends Component {
 
   createDays = (startingDate, selectedDate = this.state.selectedDate) => {
     const {
-      numDaysInWeek,
       useIsoWeekday,
       scrollable,
       minDate,
@@ -426,7 +424,7 @@ class CalendarStrip extends Component {
     let _startingDate = startingDate;
     let days = [];
     let datesList = [];
-    let numDays = numDaysInWeek;
+    let numDays = this.numDaysInWeek;
     let initialScrollerIndex;
 
     if (scrollable) {
@@ -540,7 +538,7 @@ class CalendarStrip extends Component {
           }
 
           <View style={styles.datesStrip}>
-            <WeekSelector
+            {/* <WeekSelector
               controlDate={this.props.minDate}
               iconComponent={this.props.leftSelector}
               iconContainerStyle={this.props.iconContainer}
@@ -551,7 +549,7 @@ class CalendarStrip extends Component {
               weekStartDate={this.state.weekStartDate}
               weekEndDate={this.state.weekEndDate}
               size={this.state.selectorSize}
-            />
+            /> */}
 
             <View onLayout={this.onLayout} style={styles.calendarDates}>
               {this.props.showDate ? (
@@ -561,7 +559,7 @@ class CalendarStrip extends Component {
               )}
             </View>
 
-            <WeekSelector
+            {/* <WeekSelector
               controlDate={this.props.maxDate}
               iconComponent={this.props.rightSelector}
               iconContainerStyle={this.props.iconContainer}
@@ -572,7 +570,7 @@ class CalendarStrip extends Component {
               weekStartDate={this.state.weekStartDate}
               weekEndDate={this.state.weekEndDate}
               size={this.state.selectorSize}
-            />
+            /> */}
           </View>
 
           {this.props.showDate && this.props.calendarHeaderPosition === "below" &&

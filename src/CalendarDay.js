@@ -458,14 +458,6 @@ class CalendarDay extends Component {
               _dateViewStyle
             ]}
           >
-            {showDayName && (
-              <Text
-                style={[{ fontSize: dateNameFontSize }, _dateNameStyle]}
-                allowFontScaling={allowDayTextScaling}
-              >
-                {date.format("ddd").toUpperCase()}
-              </Text>
-            )}
             {showDayNumber && (
               <View>
                 <Text
@@ -479,6 +471,14 @@ class CalendarDay extends Component {
                 </Text>
                 { this.renderMarking() }
               </View>
+            )}
+            {showDayName && (
+              <Text
+                style={[{ fontSize: dateNameFontSize }, _dateNameStyle]}
+                allowFontScaling={allowDayTextScaling}
+              >
+                {date.format("ddd").toUpperCase()}
+              </Text>
             )}
           </View>
         </TouchableOpacity>
